@@ -6,25 +6,30 @@
 #include <limits>
 #include <map>
 using namespace std;
-
-// Function to handle user input for an integer 
+// Function to handle user input for a positive integer
 int getValidIntegerInput(const string& prompt) {
     string input;
     int value;
-    
+
     while (true) {
         cout << prompt;
-        getline(cin, input); 
+        getline(cin, input);
 
         try {
-            // Check if the input is a valid integer
-            size_t pos = 0;
-            value = stoi(input, &pos);
-            
-            if (pos != input.size()) {
+            // Ensure the input contains only digits
+            bool isValid = true;
+            for (char ch : input) {
+                if (!isdigit(ch)) {
+                    isValid = false;
+                    break;
+                }
+            }
+
+            if (!isValid || input.empty()) {
                 throw invalid_argument("\t\033[31mInvalid input. Please enter a valid integer.\033[0m");
             }
-            
+
+            value = stoi(input); // Convert input to integer
             return value;
         } catch (const invalid_argument& e) {
             cout << e.what() << endl;
@@ -337,6 +342,35 @@ private:
 	allCourses.push_back(new Course("CAP 401", "Capstone Project", 3, "CBEAM", "BSLM", 4));
 	allCourses.push_back(new Course("PRACT 401", "Practicum in Logistics", 3, "CBEAM", "BSLM", 4));
 	allCourses.push_back(new Course("PE 4", "Physical Education 4", 3, "CBEAM", "BSLM", 4));
+	
+	allCourses.push_back(new Course("ENTREP 11", "Introduction to Entrepreneurship", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("MATH 13", "Business Mathematics", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("COM 21", "Business Communication", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("ECON 13", "Microeconomics", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("STAT 110", "Statistics", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("PE 1", "Physical Education", 3, "CBEAM", "BSENTREP", 1));
+	
+	allCourses.push_back(new Course("ENTREP 21", "Marketing for Entrepreneurs", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("ACC 71", "Introduction to Financial Accounting", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("ENTREP 22", "Business Planning", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("ECON 14", "Macroeconomics", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("LAW 101", "Introduction to Business Law", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("PE 2", "Physical Education 2", 3, "CBEAM", "BSENTREP", 2));
+	
+	allCourses.push_back(new Course("ENTREP 31", "Operations Management", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("ENTREP 32", "Financial Management for Entrepreneurs", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("MGT 101", "Principles of Management", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("ENTREP 33", "Innovation and Product Development", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("RES 101", "Research Methods", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("PE 3", "Physical Education 3", 3, "CBEAM", "BSENTREP", 3));
+	
+	allCourses.push_back(new Course("ENTREP 41", "Entrepreneurship Seminar and Workshop", 3, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("ENTREP 42", "Enterprise Feasibility Study", 3, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("ENTREP 43", "Entrepreneurial Leadership", 3, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("STRAT 101", "Strategic Management", 3, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("OJT 101", "On-the-Job Training", 6, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("ETHICS 101", "Business Ethics", 3, "CBEAM", "BSENTREP", 4));
+
     
  // Adding BSMMA courses for Year 1
     allCourses.push_back(new Course("EPD 101", "Elements and Principle of Design Lec ", 3, "CEAS", "BSMMA", 1));
@@ -437,7 +471,6 @@ private:
 }
 
 public:
-    // Static method to get the instance
     static AllCourses& getInstance() {
     static AllCourses instance;
     return instance;
@@ -518,29 +551,6 @@ public:
 	    } while (choice != "1" && choice != "2" && choice != "3");
 	}
 
-    // Function to Display All Courses
-    void displayAllCourses() const {
-    if (allCourses.empty()) {
-        system("CLS");
-        cout << "\n\t-------------------------------------------------------------------------------------\n"
-             << "\n\t                              DISPLAYING ALL COURSES"
-             << "\n\t-------------------------------------------------------------------------------------\n";
-        cout << "No courses available." << endl;
-        system("PAUSE");
-        return;
-    }
-
-    // Table header
-    cout << "\t" << left << setw(20) << "Course Code"
-         << setw(50) << "Course Name"
-         << right << setw(10) << "Units" << endl;
-    cout << string(80, '-') << endl; // Separator for better readability
-
-    // Loop through all courses and display their details
-    for (const Course* course : allCourses) {
-        course->displayCourseInfo();
-    }
-}
 	// Function to remove a course from the system
     void removeCourse(const string& searchID) {
         for (int i = 0; i < allCourses.size(); ++i) {
@@ -594,49 +604,56 @@ public:
 };
 
 AllCourses* AllCourses::instance = nullptr;
-
 class CurriculumByYear : public CurriculumStrategy {
 public:
     void viewCurriculum(const string& dept, const string& program) const override {
-        // Display table headers
+        const vector<Course*>& allCourses = AllCourses::getInstance().getAllCourses();
 
-        map<int, vector<const Course*>> coursesByYear;
-
-        // Group courses by year
-        for (const Course* course : AllCourses::getInstance().getAllCourses()) {
+        // Check if there are any courses for the specified department and program
+        bool hasCourses = false;
+        for (const Course* course : allCourses) {
             if (course->getCourseDept() == dept && course->getCourseProg() == program) {
-                coursesByYear[course->getCourseYear()].push_back(course);
+                hasCourses = true;
+                break;
             }
         }
 
-        if (coursesByYear.empty()) {
+        if (!hasCourses) {
             cout << "\tNo courses available for this program and department." << endl;
             system("PAUSE");
-        } else {
-            // Prompt user for the year they want to view
-            int selectedYear;
-            do{
-            selectedYear = getValidIntegerInput("\tEnter the year you want to view (1-4): ");
-            if(selectedYear<1 || selectedYear>4) { cout << "\t\033[31mInvalid input.\033[0m\n";}
-            }while(selectedYear<1 || selectedYear>4);
+            return;
+        }
 
-            // Check if courses exist for the selected year
-            auto it = coursesByYear.find(selectedYear);
-            if (it != coursesByYear.end()) {
-            	 cout << endl << setw(20) << "\t\033[32mCourse Code" << setw(50) << "Course Name" 
-             << setw(10) << "Units" << setw(15) << "Year\033[0m" << endl;
-                cout << "\n\t-------------------------------------- Year " << selectedYear 
-                     << " --------------------------------------" << endl;
-                for (const Course* course : it->second) {
-                    cout << setw(20) << course->getCourseCode() 
-                         << setw(50) << course->getCourseName() 
-                         << setw(10) << course->getCourseUnit() 
-                         << setw(10) << course->getCourseYear() 
-                         << endl;
-                }
-            } else {
-                cout << "\tNo courses available for Year " << selectedYear << endl;
+        // Prompt user for the year they want to view
+        int selectedYear;
+        do {
+            selectedYear = getValidIntegerInput("\tEnter the year you want to view (1-4): ");
+            if (selectedYear < 1 || selectedYear > 4) {
+                cout << "\t\033[31mInvalid input.\033[0m\n";
             }
+        } while (selectedYear < 1 || selectedYear > 4);
+
+        // Display courses for the selected year
+        bool foundCourses = false;
+        cout << "\033[32m";
+        cout << endl << setw(20) << "Course Code" << setw(50) << "Course Name" 
+             << setw(10) << "Units" << setw(10) << "Year";
+        cout << "\033[0m";
+        cout << "\n\t-------------------------------------- Year " << selectedYear 
+             << " --------------------------------------" << endl;
+        for (const Course* course : allCourses) {
+            if (course->getCourseDept() == dept && course->getCourseProg() == program && course->getCourseYear() == selectedYear) {
+                cout << setw(20) << course->getCourseCode()
+                     << setw(50) << course->getCourseName()
+                     << setw(10) << course->getCourseUnit()
+                     << setw(10) << course->getCourseYear()
+                     << endl;
+                foundCourses = true;
+            }
+        }
+
+        if (!foundCourses) {
+            cout << "\tNo courses available for Year " << selectedYear << endl;
         }
     }
 };
@@ -644,34 +661,40 @@ public:
 class CurriculumAllCourses : public CurriculumStrategy {
 public:
     void viewCurriculum(const string& dept, const string& program) const override {
-    	cout << "\n\t---------------------------------------------------------------------------------------\n"
-        	 << "\t                                      VIEWING COURSES"
-        	 << "\n\t---------------------------------------------------------------------------------------\n";
-        cout << setw(20) << "\t\033[32mCourse Code" << setw(50) << "Course Name" << setw(15) << "Units" << setw(13) << "Year\033[0m" << endl;
+        cout << "\n\t---------------------------------------------------------------------------------------\n"
+             << "\t                                      VIEWING COURSES"
+             << "\n\t---------------------------------------------------------------------------------------\n";
+        cout << "\033[32m";
+        cout << setw(20) << "Course Code" << setw(50) << "Course Name" << setw(10) << "Units" << setw(10) << "Year" << endl;
+        cout << "\033[0m";
 
-        map<int, vector<const Course*>> coursesByYear;
+        const vector<Course*>& allCourses = AllCourses::getInstance().getAllCourses();
+        bool hasCourses = false;
 
-        for (const Course* course : AllCourses::getInstance().getAllCourses()) {
-            if (course->getCourseDept() == dept && course->getCourseProg() == program) {
-                coursesByYear[course->getCourseYear()].push_back(course);
-            }
-        }
-
-        if (coursesByYear.empty()) {
-        	system("CLS");
-            cout << "\n\tNo courses available for this program and department." << endl;
-        } else {
-            for (const auto& yearGroup : coursesByYear) {
-                cout << "\n\t---------------------------------------- Year " << yearGroup.first << " ---------------------------------------" << endl;
-                for (const Course* course : yearGroup.second) {
-                    cout 
-						 << setw(20) << course->getCourseCode() 
-                         << setw(50) << course->getCourseName() 
-                         << setw(10) << course->getCourseUnit() 
-                         << setw(10) << course->getCourseYear() 
+        for (int year = 1; year <= 4; ++year) { 
+            bool yearHasCourses = false;
+            for (const Course* course : allCourses) {
+                if (course->getCourseDept() == dept && 
+                    course->getCourseProg() == program && 
+                    course->getCourseYear() == year) {
+                    if (!yearHasCourses) {
+                        cout << "\n\t---------------------------------------- Year " << year << " ---------------------------------------" << endl;
+                        yearHasCourses = true;
+                        hasCourses = true;
+                    }
+                    cout
+						 << setw(20) << course->getCourseCode()
+                         << setw(50) << course->getCourseName()
+                         << setw(10) << course->getCourseUnit()
+                         << setw(10) << course->getCourseYear()
                          << endl;
                 }
             }
+        }
+
+        if (!hasCourses) {
+            system("CLS");
+            cout << "\n\tNo courses available for this program and department." << endl;
         }
     }
 };
@@ -914,7 +937,9 @@ public:
         cout << "\n\t-------------------------------------------------------------------------------------\n"
            	 << "\t                                   ENROLLED COURSES"
        		 << "\n\t-------------------------------------------------------------------------------------\n";
-       	cout << setw(20) << "\t\033[32mCourse Code" << setw(50) << "Course Name" << setw(25) << "Units\033[0m" << endl << endl;
+       	cout << "\033[32m";
+       	cout << setw(20) << "\tCourse Code" << setw(50) << "Course Name"  << right <<setw(10) << "Units" << endl << endl;
+       	cout << "\033[0m";
         for (const auto& course : enrolledCourses) {
             course.displayCourseInfo();  // Displays course details, including units
             totalUnits += course.getCourseUnit();  // Assumes Course class has a getUnits() method
@@ -947,7 +972,9 @@ public:
     cout << "\n\t-------------------------------------------------------------------------------------\n"
       	 << "\t                                   ENROLLED COURSES"
 		 << "\n\t-------------------------------------------------------------------------------------\n";
-	cout << setw(20) << "\t\033[32mCourse Code" << setw(50) << "Course Name" << setw(25) << "Units\033[0m" << endl << endl; 	 
+	cout << "\033[32m";
+       	cout << setw(20) << "\tCourse Code" << setw(50) << "Course Name" << right << setw(10) << "Units" << endl << endl;
+    cout << "\033[0m";
     for (const auto& course : enrolledCourses) {
         course.displayCourseInfo();  // Display course details
     }
@@ -987,8 +1014,8 @@ public:
         while (getUserID().empty() || getUserID()[0] != 'S') {
             cout << "\t\033[31mError: Student ID must start with 'S'. Invalid ID: \033[0m" << getUserID() << endl;
             string newID;
-            cout << "\tPlease enter a valid Student ID: ";
-            getline(cin, newID);
+            newID = getValidStringInput("\tPlease enter a valid Student ID: ");
+            newID = convertToUpper(newID);
             setUserID(newID);
         }
     }
@@ -1084,7 +1111,7 @@ public:
                 student->setFirstName(newFName);
                 cout << "\tEnter new last name: ";
                 getline(cin, newLName);
-                student->setFirstName(newLName);
+                student->setLastName(newLName);
                 cout << "\t\033[32mName updated successfully.\033[0m" << endl;
                 break;
             }
@@ -1192,23 +1219,23 @@ public:
 
     // View assigned courses and their enrolled students
     void viewCoursesAndStudents(const Professor* professor) const {
-        if (courses.empty()) {
-        	cout << "\n\t--------------------------------------------------------------------------\n"
+    	cout << "\n\t--------------------------------------------------------------------------\n"
 			 << "\t                            VIEW COURSES AND STUDENTS"
-			 << "\\n\t--------------------------------------------------------------------------\n";
+			 << "\n\t--------------------------------------------------------------------------\n";
+        if (courses.empty()) {
             cout << "\n\tNo courses assigned to you yet.\n";
             return;
         }
 
         for (const auto& course : courses) {
-            cout << "\tCourse: " << course->getCourseName();
+            cout << "\n\t\033[32mCourse: " << course->getCourseCode() << " - "<< course->getCourseName() << "\033[0m";
 
             // Display enrolled students
             const vector<string>& students = course->getEnrolledStudents();
             if (students.empty()) {
                 cout << "\n\tNo students are enrolled in this course.\n";
             } else {
-                cout << "\n\n\tEnrolled Students: \n\n";
+                cout << "\n\tEnrolled Students: \n\n";
                 for (const auto& studentName : students) {
                     cout << "\t    - " << studentName << endl;
                 }
@@ -1240,8 +1267,8 @@ public:
         while (getUserID().empty() || getUserID()[0] != 'P') {
             cout << "\t\033[31mError: Professor ID must start with 'P'. Invalid ID: " << getUserID() << "\033[0m" << endl;
             string newID;
-            cout << "\tPlease enter a valid Professor ID: ";
-            getline(cin, newID);
+            newID = getValidStringInput("\tPlease enter a valid Professor ID: ");
+            newID = convertToUpper(newID);
             setUserID(newID);
         }
     }
@@ -1282,26 +1309,25 @@ public:
     }
 
     // Display table header
+    cout << "\033[32m";
     cout << "\t" << setw(15) << "Professor ID" 
          << setw(30) << "Name" 
-         << setw(20) << "Assigned Courses" << endl;
+         << setw(30) << "Assigned Courses" << endl;
+    cout << "\033[0m";
     cout << "\t-------------------------------------------------------------------------------------\n";
 
     for (const auto& prof : professors) {
         // Display professor ID and name
         cout << "\t" << setw(15) << prof.getUserID()
-             << setw(30) << (prof.getFirstName() + " " + prof.getLastName());
+             << setw(30) << (prof.getFirstName() + " " + prof.getLastName()) << setw(30);
 
         // Retrieve and display assigned courses
         vector<Course*> profCourses = prof.getAssignedCourses();
         if (profCourses.empty()) {
-            cout << setw(20) << "None";
+            cout << "None";
         } else {
             for (size_t i = 0; i < profCourses.size(); ++i) {
-                if (i > 0) {
-                    cout << "\n" << setw(15) << "" << setw(30) << ""; // Indent for additional courses
-                }
-                cout << setw(20) << profCourses[i]->getCourseCode();
+                cout << profCourses[i]->getCourseCode() << "  ";
             }
         }
         cout << endl;
