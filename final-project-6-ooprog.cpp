@@ -6,7 +6,7 @@
 #include <limits>
 
 using namespace std;
-// Function to handle user input for a positive integer
+// Function to handle user input for an integer
 int getValidIntegerInput(const string& prompt) {
     string input;
     int value;
@@ -57,6 +57,7 @@ string getValidStringInput(const string& prompt) {
     }
 }
 
+// Function to convert strings to Uppercase
 string convertToUpper(const string& input) {
     string result;
     for (char c : input) {
@@ -65,6 +66,7 @@ string convertToUpper(const string& input) {
     return result;
 }
 
+// Function to validate the entered department and program
 void validateDepartmentAndProgram(string& dept, string& prog) {
     // Validate department input
     do {
@@ -99,6 +101,7 @@ void validateDepartmentAndProgram(string& dept, string& prog) {
     } while (prog.empty());
 }
 
+// Forward declaration of class Professor
 class Professor;
 
 class Course {
@@ -136,7 +139,8 @@ public:
     void setProfessor(Professor& professor) { 
         courseProfessor = &professor; 
     }
-    
+   
+   // Function to add a student to the list of enrollees in a specific course 
     void addStudent(const string& studentName) {
     enrolledStudents.push_back(studentName);
 	}
@@ -155,17 +159,9 @@ public:
              << endl;
     }
 
-    // Convert string to uppercase
-    string convertToUpper(string str) const {
-        for (auto& c : str) {
-            c = toupper(c);
-        }
-        return str;
-    }
-
     virtual void displayCourses(const string dept, string program, int year) const {}
 
-    virtual ~Course() = default; // Virtual destructor for base class
+    virtual ~Course() = default; 
 };
 
 class CurriculumStrategy {
@@ -174,7 +170,7 @@ public:
     virtual ~CurriculumStrategy() = default;
 };
 
-// Derived class to store all courses
+// Class to store and manage all courses
 class AllCourses {
 private:
 	CurriculumStrategy* curriculumStrategy;
@@ -190,6 +186,7 @@ private:
     allCourses.push_back(new Course("MATH 27", "Analytic Geometry & Calculus II", 3, "CITE", "BSCS", 1));
     allCourses.push_back(new Course("STS 1", "Science, Technology and Society", 3, "CITE", "BSCS", 1));
     allCourses.push_back(new Course("HK 11", "Wellness and Basic Injury Management", 3, "CITE", "BSCS", 1));
+    allCourses.push_back(new Course("MATH 12", "Calculus I", 3, "CITE", "BSCS", 1));
 
     // Year 2 courses for BSCS
     allCourses.push_back(new Course("CMSC 122", "Data Structures and Algorithms", 3, "CITE", "BSCS", 2));
@@ -197,15 +194,16 @@ private:
     allCourses.push_back(new Course("MATH 33", "Mathematical Methods for Computer Science", 3, "CITE", "BSCS", 2));
     allCourses.push_back(new Course("CS 130", "Software Engineering", 3, "CITE", "BSCS", 2));
     allCourses.push_back(new Course("PHYS 11", "Physics for Engineers", 3, "CITE", "BSCS", 2));
-    allCourses.push_back(new Course("PE 1", "Physical Education", 3, "CITE", "BSCS", 2));
+    allCourses.push_back(new Course("CMSC 132", "Object-Oriented Programming", 3, "CITE", "BSCS", 2));
+	allCourses.push_back(new Course("MATH 34", "Linear Algebra", 3, "CITE", "BSCS", 2));
 
     // Year 3 courses for BSCS
     allCourses.push_back(new Course("CMSC 135", "Database Systems", 3, "CITE", "BSCS", 3));
     allCourses.push_back(new Course("CMSC 142", "Operating Systems", 3, "CITE", "BSCS", 3));
     allCourses.push_back(new Course("CMSC 150", "Web Development", 3, "CITE", "BSCS", 3));
     allCourses.push_back(new Course("MATH 42", "Discrete Structures", 3, "CITE", "BSCS", 3));
-    allCourses.push_back(new Course("PE 2", "Physical Education", 3, "CITE", "BSCS", 3));
-    allCourses.push_back(new Course("HK 12", "Health & Wellness", 3, "CITE", "BSCS", 3));
+    allCourses.push_back(new Course("CMSC 140", "Computer Graphics", 3, "CITE", "BSCS", 3));
+	allCourses.push_back(new Course("MATH 45", "Probability and Statistics for Computer Science", 3, "CITE", "BSCS", 3));
 
     // Year 4 courses for BSCS
     allCourses.push_back(new Course("CMSC 180", "Capstone Project I", 3, "CITE", "BSCS", 4));
@@ -213,119 +211,120 @@ private:
     allCourses.push_back(new Course("CMSC 143", "Computer Networks", 3, "CITE", "BSCS", 4));
     allCourses.push_back(new Course("CMSC 120", "Theoretical Computer Science", 3, "CITE", "BSCS", 4));
     allCourses.push_back(new Course("CS 131", "Advanced Software Engineering", 3, "CITE", "BSCS", 4));
-    allCourses.push_back(new Course("PE 3", "Physical Education", 3, "CITE", "BSCS", 4));
+    allCourses.push_back(new Course("CMSC 145", "Artificial Intelligence", 3, "CITE", "BSCS", 4));
+	allCourses.push_back(new Course("CMSC 160", "Cloud Computing", 3, "CITE", "BSCS", 4));
 
     // Adding BSIT courses for Year 1
-    allCourses.push_back(new Course("CMSC 12", "Foundations of Computer Science", 3, "CITE", "BSIT", 1));
-    allCourses.push_back(new Course("CMSC 56", "Discrete Mathematics I", 3, "CITE", "BSIT", 1));
-    allCourses.push_back(new Course("ETHICS 1", "Ethics and Moral Reasoning", 3, "CITE", "BSIT", 1));
-    allCourses.push_back(new Course("MATH 27", "Analytic Geometry & Calculus II", 3, "CITE", "BSIT", 1));
-    allCourses.push_back(new Course("STS 1", "Science, Technology and Society", 3, "CITE", "BSIT", 1));
-    allCourses.push_back(new Course("HK 11", "Wellness and Basic Injury Management", 3, "CITE", "BSIT", 1));
+	allCourses.push_back(new Course("CIT 10", "Introduction to Information Technology", 3, "CITE", "BSIT", 1));
+	allCourses.push_back(new Course("MATH 15", "Mathematics for Information Technology", 3, "CITE", "BSIT", 1));
+	allCourses.push_back(new Course("ETHICS 1", "Ethics and Moral Reasoning", 3, "CITE", "BSIT", 1));
+	allCourses.push_back(new Course("MATH 21", "Differential Calculus", 3, "CITE", "BSIT", 1));
+	allCourses.push_back(new Course("STS 1", "Science, Technology and Society", 3, "CITE", "BSIT", 1));
+	allCourses.push_back(new Course("PE 11", "Physical Education and Wellness", 3, "CITE", "BSIT", 1));
+	
+	// Year 2 courses for BSIT
+	allCourses.push_back(new Course("CIT 22", "Data Structures and Algorithms", 3, "CITE", "BSIT", 2));
+	allCourses.push_back(new Course("CIT 25", "Computer Architecture", 3, "CITE", "BSIT", 2));
+	allCourses.push_back(new Course("MATH 32", "Discrete Mathematics for IT", 3, "CITE", "BSIT", 2));
+	allCourses.push_back(new Course("CS 100", "Software Development Fundamentals", 3, "CITE", "BSIT", 2));
+	allCourses.push_back(new Course("PHYS 10", "Basic Physics for IT", 3, "CITE", "BSIT", 2));
+	allCourses.push_back(new Course("PE 12", "Physical Education II", 3, "CITE", "BSIT", 2));
+	
+	// Year 3 courses for BSIT
+	allCourses.push_back(new Course("CIT 33", "Database Management Systems", 3, "CITE", "BSIT", 3));
+	allCourses.push_back(new Course("CIT 40", "Introduction to Networking", 3, "CITE", "BSIT", 3));
+	allCourses.push_back(new Course("CIT 45", "Web and Mobile Application Development", 3, "CITE", "BSIT", 3));
+	allCourses.push_back(new Course("MATH 41", "Linear Algebra for IT", 3, "CITE", "BSIT", 3));
+	allCourses.push_back(new Course("PE 13", "Physical Education III", 3, "CITE", "BSIT", 3));
+	allCourses.push_back(new Course("HED 14", "Health & Wellness for IT Professionals", 3, "CITE", "BSIT", 3));
+	
+	// Year 4 courses for BSIT
+	allCourses.push_back(new Course("CIT 180", "Capstone Project I", 3, "CITE", "BSIT", 4));
+	allCourses.push_back(new Course("CIT 181", "Capstone Project II", 3, "CITE", "BSIT", 4));
+	allCourses.push_back(new Course("CIT 150", "Network Security and Cryptography", 3, "CITE", "BSIT", 4));
+	allCourses.push_back(new Course("CIT 160", "IT Project Management", 3, "CITE", "BSIT", 4));
+	allCourses.push_back(new Course("CS 140", "Advanced Software Development", 3, "CITE", "BSIT", 4));
+	allCourses.push_back(new Course("PE 14", "Physical Education IV", 3, "CITE", "BSIT", 4));
 
-    // Year 2 courses for BSIT
-    allCourses.push_back(new Course("CMSC 122", "Data Structures and Algorithms", 3, "CITE", "BSIT", 2));
-    allCourses.push_back(new Course("CMSC 128", "Computer Organization", 3, "CITE", "BSIT", 2));
-    allCourses.push_back(new Course("MATH 33", "Mathematical Methods for Computer Science", 3, "CITE", "BSIT", 2));
-    allCourses.push_back(new Course("CS 130", "Software Engineering", 3, "CITE", "BSIT", 2));
-    allCourses.push_back(new Course("PHYS 11", "Physics for Engineers", 3, "CITE", "BSIT", 2));
-    allCourses.push_back(new Course("PE 1", "Physical Education", 3, "CITE", "BSIT", 2));
-
-    // Year 3 courses for BSIT
-    allCourses.push_back(new Course("CMSC 135", "Database Systems", 3, "CITE", "BSIT", 3));
-    allCourses.push_back(new Course("CMSC 142", "Operating Systems", 3, "CITE", "BSIT", 3));
-    allCourses.push_back(new Course("CMSC 150", "Web Development", 3, "CITE", "BSIT", 3));
-    allCourses.push_back(new Course("MATH 42", "Discrete Structures", 3, "CITE", "BSIT", 3));
-    allCourses.push_back(new Course("PE 2", "Physical Education", 3, "CITE", "BSIT", 3));
-    allCourses.push_back(new Course("HK 12", "Health & Wellness", 3, "CITE", "BSIT", 3));
-
-    // Year 4 courses for BSIT
-    allCourses.push_back(new Course("CMSC 180", "Capstone Project I", 3, "CITE", "BSIT", 4));
-    allCourses.push_back(new Course("CMSC 181", "Capstone Project II", 3, "CITE", "BSIT", 4));
-    allCourses.push_back(new Course("CMSC 143", "Computer Networks", 3, "CITE", "BSIT", 4));
-    allCourses.push_back(new Course("CMSC 120", "Theoretical Computer Science", 3, "CITE", "BSIT", 4));
-    allCourses.push_back(new Course("CS 131", "Advanced Software Engineering", 3, "CITE", "BSIT", 4));
-    allCourses.push_back(new Course("PE 3", "Physical Education", 3, "CITE", "BSIT", 4));
 
     // Adding BSARCHI courses for Year 1
-    allCourses.push_back(new Course("ARCHI 10", "Architectural Design 1", 3, "CITE", "BSARCHI", 1));
-    allCourses.push_back(new Course("MATH 27", "Analytic Geometry & Calculus II", 3, "CITE", "BSARCHI", 1));
-    allCourses.push_back(new Course("ENG 1", "English for Academic Purposes", 3, "CITE", "BSARCHI", 1));
-    allCourses.push_back(new Course("HIST 1", "History of Architecture", 3, "CITE", "BSARCHI", 1));
-    allCourses.push_back(new Course("ETHICS 1", "Ethics and Moral Reasoning", 3, "CITE", "BSARCHI", 1));
-    allCourses.push_back(new Course("PE 1", "Physical Education", 3, "CITE", "BSARCHI", 1));
+	allCourses.push_back(new Course("ARCH 101", "Architectural Design 1", 3, "CITE", "BSARCHI", 1));
+	allCourses.push_back(new Course("MATH 120", "Analytic Geometry & Calculus II", 3, "CITE", "BSARCHI", 1));
+	allCourses.push_back(new Course("ENG 101", "English for Academic Purposes", 3, "CITE", "BSARCHI", 1));
+	allCourses.push_back(new Course("HIST 101", "History of Architecture", 3, "CITE", "BSARCHI", 1));
+	allCourses.push_back(new Course("PHIL 101", "Ethics and Moral Reasoning", 3, "CITE", "BSARCHI", 1));
+	allCourses.push_back(new Course("PE 101", "Physical Education", 3, "CITE", "BSARCHI", 1));
+	
+	// Year 2 courses for BSARCHI
+	allCourses.push_back(new Course("ARCH 201", "Architectural Design 2", 3, "CITE", "BSARCHI", 2));
+	allCourses.push_back(new Course("MATH 210", "Mathematical Methods for Architecture", 3, "CITE", "BSARCHI", 2));
+	allCourses.push_back(new Course("PHY 101", "Physics for Architecture", 3, "CITE", "BSARCHI", 2));
+	allCourses.push_back(new Course("ARCH 202", "Building Materials and Construction", 3, "CITE", "BSARCHI", 2));
+	allCourses.push_back(new Course("PHIL 201", "Philosophy of Architecture", 3, "CITE", "BSARCHI", 2));
+	allCourses.push_back(new Course("PE 102", "Physical Education", 3, "CITE", "BSARCHI", 2));
+	
+	// Year 3 courses for BSARCHI
+	allCourses.push_back(new Course("ARCH 301", "Architectural Design 3", 3, "CITE", "BSARCHI", 3));
+	allCourses.push_back(new Course("CAD 210", "Computer Aided Design and Drafting", 3, "CITE", "BSARCHI", 3));
+	allCourses.push_back(new Course("PLN 301", "Fundamentals of Community Planning", 3, "CITE", "BSARCHI", 3));
+	allCourses.push_back(new Course("ARCH 303", "Building Acoustics and Lighting Systems", 3, "CITE", "BSARCHI", 3));
+	allCourses.push_back(new Course("INT 304", "Architectural Interiors", 3, "CITE", "BSARCHI", 3));
+	allCourses.push_back(new Course("PE 103", "Physical Education", 3, "CITE", "BSARCHI", 3));
+	
+	// Year 4 courses for BSARCHI
+	allCourses.push_back(new Course("ARCH 401", "Architectural Design 4", 3, "CITE", "BSARCHI", 4));
+	allCourses.push_back(new Course("URB 440", "Community Architecture and Urban Design", 3, "CITE", "BSARCHI", 4));
+	allCourses.push_back(new Course("HSNG 301", "Housing", 3, "CITE", "BSARCHI", 4));
+	allCourses.push_back(new Course("STRUCT 350", "Design of Complex Structures", 3, "CITE", "BSARCHI", 4));
 
-    // Year 2 courses for BSARCHI
-    allCourses.push_back(new Course("ARCHI 20", "Architectural Design 2", 3, "CITE", "BSARCHI", 2));
-    allCourses.push_back(new Course("MATH 33", "Mathematical Methods for Architecture", 3, "CITE", "BSARCHI", 2));
-    allCourses.push_back(new Course("PHY 11", "Physics for Architecture", 3, "CITE", "BSARCHI", 2));
-    allCourses.push_back(new Course("ARCHI 21", "Building Materials and Construction", 3, "CITE", "BSARCHI", 2));
-    allCourses.push_back(new Course("PHIL 2", "Philosophy of Architecture", 3, "CITE", "BSARCHI", 2));
-    allCourses.push_back(new Course("PE 2", "Physical Education", 3, "CITE", "BSARCHI", 2));
 
-   // Year 3 courses for BSARCHI 
-    allCourses.push_back(new Course("ARCHI 30", "Architectural Design 3", 3, "CITE", "BSARCHI", 3));
-    allCourses.push_back(new Course("ARCAD 28", "Computer Aided Design and Drafting", 3, "CITE", "BSARCHI", 3));
-    allCourses.push_back(new Course("FUNDA 67", "Fundamentals of Community Planning", 3, "CITE", "BSARCHI", 3));
-    allCourses.push_back(new Course("ARCHI 22", "Building Acoustics and Lighting System", 3, "CITE", "BSARCHI", 3));
-    allCourses.push_back(new Course("ARCHI 45", "Architectural Interiors", 3, "CITE", "BSARCHI", 3));
-    allCourses.push_back(new Course("PE 3", "Physical Education", 3, "CITE", "BSARCHI", 3));
-
-   // Year 4 courses for BSARCHI
-    allCourses.push_back(new Course("CMSC 180", "Capstone Project I", 3, "CITE", "BSARCHI", 4));
-    allCourses.push_back(new Course("CMSC 181", "Capstone Project II", 3, "CITE", "BSARCHI", 4));
-    allCourses.push_back(new Course("ARCHI 40", "Architectural Design 4", 3, "CITE", "BSARCHI", 4));
-    allCourses.push_back(new Course("COMARC 54", "Community Architecture and Urban Design", 3, "CITE", "BSARCHI", 4));
-    allCourses.push_back(new Course("ARHOUSE 17", "Housing", 3, "CITE", "BSARCHI", 4));
-    allCourses.push_back(new Course("ARCHI 76", "Design of Complex Structures", 3, "CITE", "BSARCHI", 4));
-
-   // Adding BSA courses for Year 1
-    allCourses.push_back(new Course("MATH 13", "Business Mathematics", 3, "CBEAM", "BSA", 1));
-    allCourses.push_back(new Course("COM 21", "Business Communication", 3, "CBEAM", "BSA", 1));
-    allCourses.push_back(new Course("ECON 13", "Microeconomics", 3, "CBEAM", "BSA", 1));
-    allCourses.push_back(new Course("STAT 110", "Statistics", 3, "CBEAM", "BSA", 1));
-    allCourses.push_back(new Course("ACC 71", "Introduction to Financial Accounting", 3, "CBEAM", "BSA", 1));
-    allCourses.push_back(new Course("PE 1", "Physical Education", 3, "CBEAM", "BSA", 1));
-
-   // Year 2 courses for BSA
-    allCourses.push_back(new Course("ACC 72", "Financial Accounting 2", 3, "CBEAM", "BSA", 2));
-    allCourses.push_back(new Course("BLAW 12", "Business Law", 3, "CBEAM", "BSA", 2));
-    allCourses.push_back(new Course("AUD 45", "Auditing Principles and Practices", 3, "CBEAM", "BSA", 2));
-    allCourses.push_back(new Course("FIN 8", "Financial Management", 3, "CBEAM", "BSA", 2));
-    allCourses.push_back(new Course("TAX 28", "Taxation", 3, "CBEAM", "BSA", 2));
-    allCourses.push_back(new Course("PE 2", "Physical Education 2", 3, "CBEAM", "BSA", 2));
-
-   // Year 3 courses for BSA
-    allCourses.push_back(new Course("ACC 73", "Financial Accounting 3", 3, "CBEAM", "BSA", 3));
-    allCourses.push_back(new Course("BLAW 22", "Business Law 2", 3, "CBEAM", "BSA", 3));
-    allCourses.push_back(new Course("ENTR 61", "Entrepreneurship and Small Business Accounting", 3, "CBEAM", "BSA", 3));
-    allCourses.push_back(new Course("ACC 31", "Advanced Accounting", 3, "CBEAM", "BSA", 3));
-    allCourses.push_back(new Course("ECON 58", "Macroeconomics", 3, "CBEAM", "BSA", 3));
-    allCourses.push_back(new Course("PE 3", "Physical Education 3", 3, "CBEAM", "BSA", 3));
-
-   // Year 4 courses for BSA
-    allCourses.push_back(new Course("CMSC 180", "Capstone Project I", 3, "CBEAM", "BSA", 4));
-    allCourses.push_back(new Course("CMSC 181", "Capstone Project II", 3, "CBEAM", "BSA", 4));
-    allCourses.push_back(new Course("ACC 43", "Risk Management in Accounting", 3, "CBEAM", "BSA", 4));
-    allCourses.push_back(new Course("AUD 53", "Advanced Auditing", 3, "CBEAM", "BSA", 4));
-    allCourses.push_back(new Course("FIN 89", "Financial Statement Analysis", 3, "CBEAM", "BSA", 4));
-    allCourses.push_back(new Course("AUDTP 42", "Auditing Theory and Practice", 3, "CBEAM", "BSA", 4));
+    // Adding BSA courses for Year 1
+	allCourses.push_back(new Course("MATH 110", "Business Mathematics", 3, "CBEAM", "BSA", 1));
+	allCourses.push_back(new Course("COM 101", "Business Communication", 3, "CBEAM", "BSA", 1));
+	allCourses.push_back(new Course("ECON 101", "Microeconomics", 3, "CBEAM", "BSA", 1));
+	allCourses.push_back(new Course("STAT 120", "Statistics", 3, "CBEAM", "BSA", 1));
+	allCourses.push_back(new Course("ACC 101", "Introduction to Financial Accounting", 3, "CBEAM", "BSA", 1));
+	allCourses.push_back(new Course("PE 101B", "Physical Education", 3, "CBEAM", "BSA", 1));
+	
+	// Year 2 courses for BSA
+	allCourses.push_back(new Course("ACC 201", "Financial Accounting 2", 3, "CBEAM", "BSA", 2));
+	allCourses.push_back(new Course("BLAW 101", "Business Law", 3, "CBEAM", "BSA", 2));
+	allCourses.push_back(new Course("AUD 101", "Auditing Principles and Practices", 3, "CBEAM", "BSA", 2));
+	allCourses.push_back(new Course("FIN 101", "Financial Management", 3, "CBEAM", "BSA", 2));
+	allCourses.push_back(new Course("TAX 101", "Taxation", 3, "CBEAM", "BSA", 2));
+	allCourses.push_back(new Course("PE 102B", "Physical Education 2", 3, "CBEAM", "BSA", 2));
+	
+	// Year 3 courses for BSA
+	allCourses.push_back(new Course("ACC 301", "Financial Accounting 3", 3, "CBEAM", "BSA", 3));
+	allCourses.push_back(new Course("BLAW 201", "Business Law 2", 3, "CBEAM", "BSA", 3));
+	allCourses.push_back(new Course("ENTR 101", "Entrepreneurship and Small Business Accounting", 3, "CBEAM", "BSA", 3));
+	allCourses.push_back(new Course("ACC 401", "Advanced Accounting", 3, "CBEAM", "BSA", 3));
+	allCourses.push_back(new Course("ECON 201", "Macroeconomics", 3, "CBEAM", "BSA", 3));
+	allCourses.push_back(new Course("PE 103B", "Physical Education 3", 3, "CBEAM", "BSA", 3));
+	
+	// Year 4 courses for BSA
+	allCourses.push_back(new Course("CAP 101", "Capstone Project I", 3, "CBEAM", "BSA", 4));
+	allCourses.push_back(new Course("CAP 102", "Capstone Project II", 3, "CBEAM", "BSA", 4));
+	allCourses.push_back(new Course("ACC 401", "Risk Management in Accounting", 3, "CBEAM", "BSA", 4));
+	allCourses.push_back(new Course("AUD 201", "Advanced Auditing", 3, "CBEAM", "BSA", 4));
+	allCourses.push_back(new Course("FIN 301", "Financial Statement Analysis", 3, "CBEAM", "BSA", 4));
+	allCourses.push_back(new Course("AUDTP 101", "Auditing Theory and Practice", 3, "CBEAM", "BSA", 4));
     
-   // Year 1 courses for BSLM
+	// Year 1 courses for BSLM
 	allCourses.push_back(new Course("LM 101", "Introduction to Logistics Management", 3, "CBEAM", "BSLM", 1));
 	allCourses.push_back(new Course("MATH 10", "Business Mathematics", 3, "CBEAM", "BSLM", 1));
-	allCourses.push_back(new Course("ENGL 1", "Communication Skills 1", 3, "CBEAM", "BSLM", 1));
-	allCourses.push_back(new Course("ETHICS 1", "Ethics and Moral Reasoning", 3, "CBEAM", "BSLM", 1));
-	allCourses.push_back(new Course("STS 1", "Science, Technology and Society", 3, "CBEAM", "BSLM", 1));
-	allCourses.push_back(new Course("PE 1", "Physical Education 1", 3, "CBEAM", "BSLM", 1));
+	allCourses.push_back(new Course("ENGL 101", "Communication Skills 1", 3, "CBEAM", "BSLM", 1));
+	allCourses.push_back(new Course("ETHICS 101", "Ethics and Moral Reasoning", 3, "CBEAM", "BSLM", 1));
+	allCourses.push_back(new Course("STS 101", "Science, Technology and Society", 3, "CBEAM", "BSLM", 1));
+	allCourses.push_back(new Course("PE 101C", "Physical Education 1", 3, "CBEAM", "BSLM", 1));
 	
 	// Year 2 courses for BSLM
 	allCourses.push_back(new Course("LM 201", "Supply Chain Management", 3, "CBEAM", "BSLM", 2));
 	allCourses.push_back(new Course("ACC 101", "Fundamentals of Accounting", 3, "CBEAM", "BSLM", 2));
 	allCourses.push_back(new Course("MGMT 101", "Principles of Management", 3, "CBEAM", "BSLM", 2));
 	allCourses.push_back(new Course("MKTG 101", "Principles of Marketing", 3, "CBEAM", "BSLM", 2));
-	allCourses.push_back(new Course("COMM 2", "Business Communication", 3, "CBEAM", "BSLM", 2));
-	allCourses.push_back(new Course("PE 2", "Physical Education 2", 3, "CBEAM", "BSLM", 2));
+	allCourses.push_back(new Course("COMM 201", "Business Communication", 3, "CBEAM", "BSLM", 2));
+	allCourses.push_back(new Course("PE 102C", "Physical Education 2", 3, "CBEAM", "BSLM", 2));
 	
 	// Year 3 courses for BSLM
 	allCourses.push_back(new Course("LM 301", "Warehousing and Distribution Management", 3, "CBEAM", "BSLM", 3));
@@ -333,7 +332,7 @@ private:
 	allCourses.push_back(new Course("FIN 201", "Financial Management", 3, "CBEAM", "BSLM", 3));
 	allCourses.push_back(new Course("OM 301", "Operations Management", 3, "CBEAM", "BSLM", 3));
 	allCourses.push_back(new Course("RES 301", "Research Methods", 3, "CBEAM", "BSLM", 3));
-	allCourses.push_back(new Course("PE 3", "Physical Education 3", 3, "CBEAM", "BSLM", 3));
+	allCourses.push_back(new Course("PE 103C", "Physical Education 3", 3, "CBEAM", "BSLM", 3));
 	
 	// Year 4 courses for BSLM
 	allCourses.push_back(new Course("LM 401", "Global Logistics", 3, "CBEAM", "BSLM", 4));
@@ -341,60 +340,64 @@ private:
 	allCourses.push_back(new Course("ENTR 401", "Entrepreneurship", 3, "CBEAM", "BSLM", 4));
 	allCourses.push_back(new Course("CAP 401", "Capstone Project", 3, "CBEAM", "BSLM", 4));
 	allCourses.push_back(new Course("PRACT 401", "Practicum in Logistics", 3, "CBEAM", "BSLM", 4));
-	allCourses.push_back(new Course("PE 4", "Physical Education 4", 3, "CBEAM", "BSLM", 4));
+	allCourses.push_back(new Course("PE 104C", "Physical Education 4", 3, "CBEAM", "BSLM", 4));
 	
-	allCourses.push_back(new Course("ENTREP 11", "Introduction to Entrepreneurship", 3, "CBEAM", "BSENTREP", 1));
-	allCourses.push_back(new Course("MATH 13", "Business Mathematics", 3, "CBEAM", "BSENTREP", 1));
-	allCourses.push_back(new Course("COM 21", "Business Communication", 3, "CBEAM", "BSENTREP", 1));
-	allCourses.push_back(new Course("ECON 13", "Microeconomics", 3, "CBEAM", "BSENTREP", 1));
-	allCourses.push_back(new Course("STAT 110", "Statistics", 3, "CBEAM", "BSENTREP", 1));
-	allCourses.push_back(new Course("PE 1", "Physical Education", 3, "CBEAM", "BSENTREP", 1));
+	// Year 1 courses for BSENTREP
+	allCourses.push_back(new Course("ENTR 111", "Introduction to Entrepreneurship", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("BUSM 131", "Business Mathematics", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("COMU 151", "Business Communication", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("ECOB 121", "Microeconomics", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("STAT 112", "Statistics", 3, "CBEAM", "BSENTREP", 1));
+	allCourses.push_back(new Course("PEA 101A", "Physical Education 1", 3, "CBEAM", "BSENTREP", 1));
 	
-	allCourses.push_back(new Course("ENTREP 21", "Marketing for Entrepreneurs", 3, "CBEAM", "BSENTREP", 2));
-	allCourses.push_back(new Course("ACC 71", "Introduction to Financial Accounting", 3, "CBEAM", "BSENTREP", 2));
-	allCourses.push_back(new Course("ENTREP 22", "Business Planning", 3, "CBEAM", "BSENTREP", 2));
-	allCourses.push_back(new Course("ECON 14", "Macroeconomics", 3, "CBEAM", "BSENTREP", 2));
-	allCourses.push_back(new Course("LAW 101", "Introduction to Business Law", 3, "CBEAM", "BSENTREP", 2));
-	allCourses.push_back(new Course("PE 2", "Physical Education 2", 3, "CBEAM", "BSENTREP", 2));
+	// Year 2 courses for BSENTREP
+	allCourses.push_back(new Course("ENTR 221", "Marketing for Entrepreneurs", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("ACCN 271", "Introduction to Financial Accounting", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("ENTP 232", "Business Planning", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("ECOB 122", "Macroeconomics", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("LAW 115", "Introduction to Business Law", 3, "CBEAM", "BSENTREP", 2));
+	allCourses.push_back(new Course("PEA 102A", "Physical Education 2", 3, "CBEAM", "BSENTREP", 2));
 	
-	allCourses.push_back(new Course("ENTREP 31", "Operations Management", 3, "CBEAM", "BSENTREP", 3));
-	allCourses.push_back(new Course("ENTREP 32", "Financial Management for Entrepreneurs", 3, "CBEAM", "BSENTREP", 3));
-	allCourses.push_back(new Course("MGT 101", "Principles of Management", 3, "CBEAM", "BSENTREP", 3));
-	allCourses.push_back(new Course("ENTREP 33", "Innovation and Product Development", 3, "CBEAM", "BSENTREP", 3));
-	allCourses.push_back(new Course("RES 101", "Research Methods", 3, "CBEAM", "BSENTREP", 3));
-	allCourses.push_back(new Course("PE 3", "Physical Education 3", 3, "CBEAM", "BSENTREP", 3));
+	// Year 3 courses for BSENTREP
+	allCourses.push_back(new Course("ENTR 331", "Operations Management", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("ENTP 342", "Financial Management for Entrepreneurs", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("MGT 311", "Principles of Management", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("ENTR 353", "Innovation and Product Development", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("RSHS 102", "Research Methods", 3, "CBEAM", "BSENTREP", 3));
+	allCourses.push_back(new Course("PEA 103A", "Physical Education 3", 3, "CBEAM", "BSENTREP", 3));
 	
-	allCourses.push_back(new Course("ENTREP 41", "Entrepreneurship Seminar and Workshop", 3, "CBEAM", "BSENTREP", 4));
-	allCourses.push_back(new Course("ENTREP 42", "Enterprise Feasibility Study", 3, "CBEAM", "BSENTREP", 4));
-	allCourses.push_back(new Course("ENTREP 43", "Entrepreneurial Leadership", 3, "CBEAM", "BSENTREP", 4));
-	allCourses.push_back(new Course("STRAT 101", "Strategic Management", 3, "CBEAM", "BSENTREP", 4));
-	allCourses.push_back(new Course("OJT 101", "On-the-Job Training", 6, "CBEAM", "BSENTREP", 4));
-	allCourses.push_back(new Course("ETHICS 101", "Business Ethics", 3, "CBEAM", "BSENTREP", 4));
+	// Year 4 courses for BSENTREP
+	allCourses.push_back(new Course("ENTR 441", "Entrepreneurship Seminar and Workshop", 3, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("ENTP 442", "Enterprise Feasibility Study", 3, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("ENTR 443", "Entrepreneurial Leadership", 3, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("STRT 211", "Strategic Management", 3, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("OJT 201", "On-the-Job Training", 6, "CBEAM", "BSENTREP", 4));
+	allCourses.push_back(new Course("ETHI 221", "Business Ethics", 3, "CBEAM", "BSENTREP", 4));
+	
+	// Year 1 courses for BSMMA
+	allCourses.push_back(new Course("DESN 110", "Elements and Principles of Design Lec", 3, "CEAS", "BSMMA", 1));
+	allCourses.push_back(new Course("ARTH 101", "Art History 1", 3, "CEAS", "BSMMA", 1));
+	allCourses.push_back(new Course("PCOM 110", "Purposive Communication", 3, "CEAS", "BSMMA", 1));
+	allCourses.push_back(new Course("DRAW 101", "Drawing 1 Lec", 3, "CEAS", "BSMMA", 1));
+	allCourses.push_back(new Course("DRWL 101", "Drawing 1 Lab", 3, "CEAS", "BSMMA", 1));
+	allCourses.push_back(new Course("PEA 101B", "Physical Education 1", 3, "CEAS", "BSMMA", 1));
+	
+	// Year 2 courses for BSMMA
+	allCourses.push_back(new Course("GD 210", "Graphic Design 1", 3, "CEAS", "BSMMA", 2));
+	allCourses.push_back(new Course("VIDE 211", "Video Production", 3, "CEAS", "BSMMA", 2));
+	allCourses.push_back(new Course("MODE 211", "3D Modeling and Animation", 3, "CEAS", "BSMMA", 2));
+	allCourses.push_back(new Course("WEBE 211", "Web Design and Development", 3, "CEAS", "BSMMA", 2));
+	allCourses.push_back(new Course("MPM 211", "Multimedia Project Management", 3, "CEAS", "BSMMA", 2));
+	allCourses.push_back(new Course("PEA 102B", "Physical Education 2", 3, "CEAS", "BSMMA", 2));
+	
+	// Year 3 courses for BSMMA
+	allCourses.push_back(new Course("ADVE 310", "Advertising Design", 3, "CEAS", "BSMMA", 3));
+	allCourses.push_back(new Course("ANI 311", "Advanced Animation Techniques", 3, "CEAS", "BSMMA", 3));
+	allCourses.push_back(new Course("UIUX 312", "UI/UX Design", 3, "CEAS", "BSMMA", 3));
+	allCourses.push_back(new Course("AUPR 310", "Audio-Visual Production", 3, "CEAS", "BSMMA", 3));
+	allCourses.push_back(new Course("CPM 310", "Creative Portfolio Management", 3, "CEAS", "BSMMA", 3));
+	allCourses.push_back(new Course("PEA 103B", "Physical Education 3", 3, "CEAS", "BSMMA", 3));
 
-    
- // Adding BSMMA courses for Year 1
-    allCourses.push_back(new Course("EPD 101", "Elements and Principle of Design Lec ", 3, "CEAS", "BSMMA", 1));
-    allCourses.push_back(new Course("AH 101", "Art History 1", 3, "CEAS", "BSMMA", 4));
-    allCourses.push_back(new Course("PC 101", "Purposive Communication", 3, "CEAS", "BSMMA", 1));
-    allCourses.push_back(new Course("DRW 101", "Drawing 1 Lec", 3, "CEAS", "BSMMA", 1));
-    allCourses.push_back(new Course("DRW 10", "Drawing 1 Lab ", 3, "CEAS", "BSMMA", 1));
-    allCourses.push_back(new Course("PE 1", "Physical Education", 3, "CEAS", "BSMMA", 1));
-
-	   // Year 2 courses for BSMMA
-	allCourses.push_back(new Course("GD 201", "Graphic Design 1", 3, "CEAS", "BSMMA", 2));
-	allCourses.push_back(new Course("VID 201", "Video Production", 3, "CEAS", "BSMMA", 2));
-	allCourses.push_back(new Course("3D 201", "3D Modeling and Animation", 3, "CEAS", "BSMMA", 2));
-	allCourses.push_back(new Course("WEB 201", "Web Design and Development", 3, "CEAS", "BSMMA", 2));
-	allCourses.push_back(new Course("MMP 201", "Multimedia Project Management", 3, "CEAS", "BSMMA", 2));
-	allCourses.push_back(new Course("PE 2", "Physical Education 2", 3, "CEAS", "BSMMA", 2));
-	
-	//Year 3 BSMMA
-	allCourses.push_back(new Course("ADV 301", "Advertising Design", 3, "CEAS", "BSMMA", 3));
-	allCourses.push_back(new Course("ANI 301", "Advanced Animation Techniques", 3, "CEAS", "BSMMA", 3));
-	allCourses.push_back(new Course("UIUX 301", "UI/UX Design", 3, "CEAS", "BSMMA", 3));
-	allCourses.push_back(new Course("AUD 301", "Audio-Visual Production", 3, "CEAS", "BSMMA", 3));
-	allCourses.push_back(new Course("CPM 301", "Creative Portfolio Management", 3, "CEAS", "BSMMA", 3));
-	allCourses.push_back(new Course("PE 3", "Physical Education 3", 3, "CEAS", "BSMMA", 3));
 	
 	// Year 4 BSMMA
 	allCourses.push_back(new Course("MMP 401", "Multimedia Capstone Project", 3, "CEAS", "BSMMA", 4));
@@ -402,40 +405,40 @@ private:
 	allCourses.push_back(new Course("BIZ 401", "Business for Creatives", 3, "CEAS", "BSMMA", 4));
 	allCourses.push_back(new Course("GAM 401", "Game Design and Development", 3, "CEAS", "BSMMA", 4));
 	allCourses.push_back(new Course("VRAR 401", "Virtual Reality and Augmented Reality", 3, "CEAS", "BSMMA", 4));
-	allCourses.push_back(new Course("PE 4", "Physical Education 4", 3, "CEAS", "BSMMA", 4));
+	allCourses.push_back(new Course("PEA 104B", "Physical Education 4", 3, "CEAS", "BSMMA", 4));
 	
-	// Adding BSBIO courses for Year 1
-	allCourses.push_back(new Course("GENBIO 101", "General Biology 1", 3, "CEAS", "BSBIO", 1));
-	allCourses.push_back(new Course("CHEM 101", "General Chemistry 1", 3, "CEAS", "BSBIO", 1));
-	allCourses.push_back(new Course("MATBIO 101", "Mathematics for Biologists", 3, "CEAS", "BSBIO", 1));
-	allCourses.push_back(new Course("PC 101", "Purposive Communication", 3, "CEAS", "BSBIO", 1));
-	allCourses.push_back(new Course("ICTBIO 101", "Introduction to ICT for Biologists", 3, "CEAS", "BSBIO", 1));
-	allCourses.push_back(new Course("PE 1", "Physical Education 1", 3, "CEAS", "BSBIO", 1));
+	// Year 1 courses for BSBIO
+	allCourses.push_back(new Course("BIO 111", "General Biology 1 Lec", 3, "CNSM", "BSBIO", 1));
+	allCourses.push_back(new Course("BIO 111L", "General Biology 1 Lab", 1, "CNSM", "BSBIO", 1));
+	allCourses.push_back(new Course("CHEM 111", "General Chemistry 1 Lec", 3, "CNSM", "BSBIO", 1));
+	allCourses.push_back(new Course("CHEM 111L", "General Chemistry 1 Lab", 1, "CNSM", "BSBIO", 1));
+	allCourses.push_back(new Course("MATH 111", "College Algebra", 3, "CNSM", "BSBIO", 1));
+	allCourses.push_back(new Course("PEA 101C", "Physical Education 1", 3, "CNSM", "BSBIO", 1));
 	
-	// Year 2 BSBIO
-	allCourses.push_back(new Course("GENBIO 201", "General Biology 2", 3, "CEAS", "BSBIO", 2));
-	allCourses.push_back(new Course("CHEM 201", "Organic Chemistry", 3, "CEAS", "BSBIO", 2));
-	allCourses.push_back(new Course("BOT 201", "Botany", 3, "CEAS", "BSBIO", 2));
-	allCourses.push_back(new Course("ZOO 201", "Zoology", 3, "CEAS", "BSBIO", 2));
-	allCourses.push_back(new Course("STATBIO 201", "Biostatistics", 3, "CEAS", "BSBIO", 2));
-	allCourses.push_back(new Course("PE 2", "Physical Education 2", 3, "CEAS", "BSBIO", 2));
+	// Year 2 courses for BSBIO
+	allCourses.push_back(new Course("BIO 211", "General Biology 2 Lec", 3, "CNSM", "BSBIO", 2));
+	allCourses.push_back(new Course("BIO 211L", "General Biology 2 Lab", 1, "CNSM", "BSBIO", 2));
+	allCourses.push_back(new Course("CHEM 121", "Organic Chemistry 1 Lec", 3, "CNSM", "BSBIO", 2));
+	allCourses.push_back(new Course("CHEM 121L", "Organic Chemistry 1 Lab", 1, "CNSM", "BSBIO", 2));
+	allCourses.push_back(new Course("PHY 111", "General Physics 1 Lec", 3, "CNSM", "BSBIO", 2));
+	allCourses.push_back(new Course("PHY 111L", "General Physics 1 Lab", 1, "CNSM", "BSBIO", 2));
 	
-	// BSBIO Year 3
-	allCourses.push_back(new Course("MICROBIO 301", "Microbiology", 3, "CEAS", "BSBIO", 3));
-	allCourses.push_back(new Course("PHYSIOBIO 301", "Physiology", 3, "CEAS", "BSBIO", 3));
-	allCourses.push_back(new Course("ECOBIO 301", "Ecology", 3, "CEAS", "BSBIO", 3));
-	allCourses.push_back(new Course("GENETICS 301", "Genetics", 3, "CEAS", "BSBIO", 3));
-	allCourses.push_back(new Course("RESBIO 301", "Research in Biology 1", 3, "CEAS", "BSBIO", 3));
-	allCourses.push_back(new Course("PE 3", "Physical Education 3", 3, "CEAS", "BSBIO", 3));
+	// Year 3 courses for BSBIO
+	allCourses.push_back(new Course("BIO 311", "Cell Biology", 3, "CNSM", "BSBIO", 3));
+	allCourses.push_back(new Course("BIO 312", "Genetics Lec", 3, "CNSM", "BSBIO", 3));
+	allCourses.push_back(new Course("BIO 312L", "Genetics Lab", 1, "CNSM", "BSBIO", 3));
+	allCourses.push_back(new Course("MATH 211", "Calculus for Life Sciences", 3, "CNSM", "BSBIO", 3));
+	allCourses.push_back(new Course("BIO 315", "Microbiology Lec", 3, "CNSM", "BSBIO", 3));
+	allCourses.push_back(new Course("BIO 315L", "Microbiology Lab", 1, "CNSM", "BSBIO", 3));
 	
-	
-	// BSBIO Year 4
-	allCourses.push_back(new Course("BIOCAP 401", "Biology Capstone Project", 3, "CEAS", "BSBIO", 4));
-	allCourses.push_back(new Course("EVOBIO 401", "Evolutionary Biology", 3, "CEAS", "BSBIO", 4));
-	allCourses.push_back(new Course("BIOTECH 401", "Biotechnology", 3, "CEAS", "BSBIO", 4));
-	allCourses.push_back(new Course("ENVSCI 401", "Environmental Science", 3, "CEAS", "BSBIO", 4));
-	allCourses.push_back(new Course("RESBIO 402", "Research in Biology 2", 3, "CEAS", "BSBIO", 4));
-	allCourses.push_back(new Course("PE 4", "Physical Education 4", 3, "CEAS", "BSBIO", 4));
+	// Year 4 courses for BSBIO
+	allCourses.push_back(new Course("BIO 411", "Biochemistry Lec", 3, "CNSM", "BSBIO", 4));
+	allCourses.push_back(new Course("BIO 412", "Biochemistry Lab", 1, "CNSM", "BSBIO", 4));
+	allCourses.push_back(new Course("BIO 421", "Physiology Lec", 3, "CNSM", "BSBIO", 4));
+	allCourses.push_back(new Course("BIO 421L", "Physiology Lab", 1, "CNSM", "BSBIO", 4));
+	allCourses.push_back(new Course("BIO 431", "Ecology Lec", 3, "CNSM", "BSBIO", 4));
+	allCourses.push_back(new Course("BIO 431L", "Ecology Lab", 1, "CNSM", "BSBIO", 4));
+
 	
 	// Adding BS Psychology courses for Year 1
 	allCourses.push_back(new Course("GENPSY 101", "General Psychology", 3, "CEAS", "BSPSYCH", 1));
@@ -443,7 +446,7 @@ private:
 	allCourses.push_back(new Course("PC 101", "Purposive Communication", 3, "CEAS", "BSPSYCH", 1));
 	allCourses.push_back(new Course("BIOPSY 101", "Biological Psychology", 3, "CEAS", "BSPSYCH", 1));
 	allCourses.push_back(new Course("STATPSY 101", "Statistics for Psychology", 3, "CEAS", "BSPSYCH", 1));
-	allCourses.push_back(new Course("PE 1", "Physical Education 1", 3, "CEAS", "BSPSYCH", 1));
+	allCourses.push_back(new Course("PHIL 101", "Introduction to Philosophy", 3, "CEAS", "BSPSYCH", 1));
 	
 	// Adding BS Psychology courses for Year 2
 	allCourses.push_back(new Course("DEVPSY 201", "Developmental Psychology", 3, "CEAS", "BSPSYCH", 2));
@@ -451,7 +454,7 @@ private:
 	allCourses.push_back(new Course("SOCPSY 201", "Social Psychology", 3, "CEAS", "BSPSYCH", 2));
 	allCourses.push_back(new Course("COGPSY 201", "Cognitive Psychology", 3, "CEAS", "BSPSYCH", 2));
 	allCourses.push_back(new Course("RSHPSY 201", "Research in Psychology 1", 3, "CEAS", "BSPSYCH", 2));
-	allCourses.push_back(new Course("PE 2", "Physical Education 2", 3, "CEAS", "BSPSYCH", 2));
+	allCourses.push_back(new Course("BIO 211", "Human Anatomy", 3, "CEAS", "BSPSYCH", 2));
 	
 	// Adding BS Psychology courses for Year 3
 	allCourses.push_back(new Course("THEO 301", "Theories of Personality", 3, "CEAS", "BSPSYCH", 3));
@@ -459,7 +462,7 @@ private:
 	allCourses.push_back(new Course("ABPSY 301", "Abnormal Psychology", 3, "CEAS", "BSPSYCH", 3));
 	allCourses.push_back(new Course("ORGPSY 301", "Industrial/Organizational Psychology", 3, "CEAS", "BSPSYCH", 3));
 	allCourses.push_back(new Course("RSHPSY 301", "Research in Psychology 2", 3, "CEAS", "BSPSYCH", 3));
-	allCourses.push_back(new Course("PE 3", "Physical Education 3", 3, "CEAS", "BSPSYCH", 3));
+	allCourses.push_back(new Course("PSY 305", "Psychology of Learning", 3, "CEAS", "BSPSYCH", 3));
 	
 	// BS Psychology Year 4
 	allCourses.push_back(new Course("PSYCAP 401", "Psychology Capstone Project", 3, "CEAS", "BSPSYCH", 4));
@@ -467,7 +470,7 @@ private:
 	allCourses.push_back(new Course("CONSPSY 401", "Counseling Psychology", 3, "CEAS", "BSPSYCH", 4));
 	allCourses.push_back(new Course("PSYPRA 401", "Psychology Practicum", 3, "CEAS", "BSPSYCH", 4));
 	allCourses.push_back(new Course("PSYETH 401", "Ethics in Psychology", 3, "CEAS", "BSPSYCH", 4));
-	allCourses.push_back(new Course("PE 4", "Physical Education 4", 3, "CEAS", "BSPSYCH", 4));
+	allCourses.push_back(new Course("PSYCLIN 402", "Clinical Psychology", 3, "CEAS", "BSPSYCH", 4));
 }
 
 public:
@@ -477,29 +480,28 @@ public:
 }
 
 	~AllCourses() {
-        // Clean up dynamically allocated memory
         for (Course* course : allCourses) {
             delete course;
         }
     }
 	//Add New Course to the list of all courses
     bool addCourseToAll(Course* newCourse) {
-    for (const auto& course : allCourses) {
-        if (course->getCourseCode() == newCourse->getCourseCode()) {
-            delete newCourse; // Avoid memory leak
-            return false; // Duplicate course code
-        }
-    }
-    allCourses.push_back(newCourse);
-    return true; // Successfully added
-}
+	    for (const auto& course : allCourses) {
+	        if (course->getCourseCode() == newCourse->getCourseCode()) {
+	            delete newCourse; // Avoid memory leak
+	            return false; // Duplicate course code
+	        }
+	    }
+	    allCourses.push_back(newCourse);
+	    return true; // Successfully added
+	}
 
-
-    // Method to get all courses
+    // Getter for allCourses list
     vector<Course*> getAllCourses() {
         return allCourses;
     }
-	// Method to search a course based on its ID
+    
+	// Function to search a course based on its ID
     Course* searchCourse(const string searchID) const {
         string searchLower = convertToUpper(searchID);
         for (const auto& course : allCourses) {
@@ -509,6 +511,7 @@ public:
         }
         return nullptr;
     }
+    
 	// Function to update course code, name or unit
     void updateCourse(const string& searchID) {
 	    Course* course = searchCourse(searchID);
@@ -563,6 +566,7 @@ public:
         }
         cout << "\t\033[31mCourse not found.\033[0m\n"; 
     }
+    
     // Display courses according to Department, Program, and Year
     void displayCoursesByCategory(const string& dept, const string& program, int year) const {
         bool found = false;
@@ -576,7 +580,6 @@ public:
                 cout << "\n\t----------------------------------------- Year " << year 
                      << " -----------------------------------------" << endl;
 
-        // Loop over all courses in citeCourses to filter by department, program, and year
         for (const Course* course : allCourses) {
             if (course->getCourseDept() == dept && course->getCourseProg() == program && course->getCourseYear() == year) {
                 cout << "\t" << setw(20) << course->getCourseCode() 
@@ -592,7 +595,7 @@ public:
         }
     }
     
-    // Display Curriculum of a specific Program
+    // Sets the strategy of viewing a curriculum
     void setCurriculumStrategy(CurriculumStrategy* strategy) {
         curriculumStrategy = strategy;
     }
@@ -602,8 +605,8 @@ public:
         curriculumStrategy->viewCurriculum(dept, program);
     }
 };
-
 AllCourses* AllCourses::instance = nullptr;
+
 class CurriculumByYear : public CurriculumStrategy {
 public:
     void viewCurriculum(const string& dept, const string& program) const override {
@@ -651,7 +654,6 @@ public:
                 foundCourses = true;
             }
         }
-
         if (!foundCourses) {
             cout << "\tNo courses available for Year " << selectedYear << endl;
         }
@@ -707,6 +709,7 @@ protected:
     string password;
 
 public:
+	// Parameterized Constructor
     User(string fn, string ln, string id, string pass)
         : firstName(fn), lastName(ln), userID(id), password(pass) {}
 
@@ -719,18 +722,21 @@ public:
     void setLastName(const string& ln) { lastName = ln; }
     void setUserID(const string& id) { userID = id; }
     void setPassword(const string& pass) { password = pass; }
-
+	
+	// virtual function to display user's name and ID
     virtual void displayUserInfo() const {
     	cout << "\t" << left << setw(15) << userID 
              << setw(25) << firstName + " " + lastName;
         
     }
     
+    // virtual function to validate User ID
     virtual void validateID() = 0;
 	
     virtual ~User() = default;
 };
 
+// Strategy for Payment of Tuition
 class PaymentStrategy {
 public:
     virtual void processPayment(double totalTuition, double& amountPaid) = 0;
@@ -772,8 +778,7 @@ public:
 class CustomPayment : public PaymentStrategy {
 public:
     void processPayment(double totalTuition, double& amountPaid) override {
-        cout << "\tEnter the amount you want to pay: PHP ";
-        double payment = getValidIntegerInput("");
+        double payment = getValidIntegerInput( "\tEnter the amount you want to pay: PHP ");
         
         if (payment <= 0) {
             cout << "\t\033[31mInvalid payment amount. Payment must be greater than 0.\033[0m" << endl;
@@ -824,29 +829,28 @@ public:
             cout << "\t\033[31mInvalid payment plan!\033[0m" << endl;
         }
     }
-
+	// Function to enroll a course 
     void enrollCourse(Course& course) {
     
-    // Check if the course is already enrolled
-    for (const auto& enrolledCourse : enrolledCourses) {
-        if (enrolledCourse.getCourseCode() == course.getCourseCode()) {
-            cout << "\t\033[31m" << enrolledCourse.getCourseName() 
-                 << " has already been added. Choose another one.\033[0m" << endl;
-            return;
-        }
-    }
-    // Add the course and update enrollment details
-    enrolledCourses.push_back(course);
-    course.addStudent(getFirstName() + " " + getLastName());
-    cout << "\t\033[32m" << course.getCourseName() << " has been enrolled.\033[0m" << endl;
-    if(amountPaid==0) {
-    	paymentStatus = "Unpaid"; }
-    else{
-    	paymentStatus = "Pending";
+	    // Check if the course is already enrolled
+	    for (const auto& enrolledCourse : enrolledCourses) {
+	        if (enrolledCourse.getCourseCode() == course.getCourseCode()) {
+	            cout << "\t\033[31m" << enrolledCourse.getCourseName() 
+	                 << " has already been added. Choose another one.\033[0m" << endl;
+	            return;
+	        }
+	    }
+	    // Add the course and update enrollment details
+	    enrolledCourses.push_back(course);
+	    course.addStudent(getFirstName() + " " + getLastName());
+	    cout << "\t\033[32m" << course.getCourseName() << " has been enrolled.\033[0m" << endl;
+	    if(amountPaid==0) {
+	    	paymentStatus = "Unpaid"; }
+	    else{
+	    	paymentStatus = "Pending";
+		}
 	}
-    
-}
-
+	// Function to drop a course
     void dropCourse(string& courseCode) {
         for (auto it = enrolledCourses.begin(); it != enrolledCourses.end(); ++it) {
             if (it->getCourseCode() == courseCode) {
@@ -857,7 +861,8 @@ public:
         }
         cout << "\tCourse not found." << endl;
     }
-
+	
+	// Function to update the status of payment after payment
     void updatePaymentStatus(double totalTuition) {
         if (amountPaid >= totalTuition) {
             paymentStatus = "Fully Paid";
@@ -868,12 +873,13 @@ public:
         }
     }
     
+    // Function to increment total amount of payment 
     void addPayment(double payment, double totalTuition) {
         amountPaid += payment;
         updatePaymentStatus(totalTuition);
     }
     
-
+    // Function for students to pay tuition
     void processPayment(double totalTuition) {
         if (paymentStatus == "Fully Paid") {
             cout << "\tYou have already fully paid your tuition." << endl;
@@ -915,9 +921,8 @@ public:
 		else if (paymentStatus == "Unpaid"){ cout << "\n\tUpdated Payment Status: \033[31m" << paymentStatus << "\033[0m" <<endl; } 
     }
     
-    // Destructor to clean up dynamically allocated strategy object
     ~Student() {
-        delete paymentStrategy;  // Avoid memory leak
+        delete paymentStrategy; 
     }
 
     // View enrolled courses with payment details
@@ -959,36 +964,36 @@ public:
     }
 
 	void viewEnrolledCourses() const {
-    if (enrolledCourses.empty()) {
-    	system("CLS");
-    	cout << "\n\t-------------------------------------------------------------------------------------\n"
-           	 << "\t                                   ENROLLED COURSES"
-       		 << "\n\t-------------------------------------------------------------------------------------\n";
-        cout << "\tYou are not enrolled in any courses." << endl;
-        return;
-    }
-
-    system("CLS");
-    cout << "\n\t-------------------------------------------------------------------------------------\n"
-      	 << "\t                                   ENROLLED COURSES"
-		 << "\n\t-------------------------------------------------------------------------------------\n";
-	cout << "\033[32m";
-       	cout << setw(20) << "\tCourse Code" << setw(50) << "Course Name" << right << setw(10) << "Units" << endl << endl;
-    cout << "\033[0m";
-    for (const auto& course : enrolledCourses) {
-        course.displayCourseInfo();  // Display course details
-    }
-	if (paymentStatus == "Fully Paid"){
-    cout << "\n\tPayment Status: \033[32m" << paymentStatus << "\033[0m" <<endl;
-	} 
-	else if (paymentStatus == "Pending"){
-    cout << "\n\tPayment Status: \033[33m" << paymentStatus << "\033[0m" <<endl;
+	    if (enrolledCourses.empty()) {
+	    	system("CLS");
+	    	cout << "\n\t-------------------------------------------------------------------------------------\n"
+	           	 << "\t                                   ENROLLED COURSES"
+	       		 << "\n\t-------------------------------------------------------------------------------------\n";
+	        cout << "\tYou are not enrolled in any courses." << endl;
+	        return;
+	    }
+	
+	    system("CLS");
+	    cout << "\n\t-------------------------------------------------------------------------------------\n"
+	      	 << "\t                                   ENROLLED COURSES"
+			 << "\n\t-------------------------------------------------------------------------------------\n";
+		cout << "\033[32m";
+	       	cout << setw(20) << "\tCourse Code" << setw(50) << "Course Name" << right << setw(10) << "Units" << endl << endl;
+	    cout << "\033[0m";
+	    for (const auto& course : enrolledCourses) {
+	        course.displayCourseInfo();  // Display course details
+	    }
+		if (paymentStatus == "Fully Paid"){
+	    	cout << "\n\tPayment Status: \033[32m" << paymentStatus << "\033[0m" <<endl;
+		} 
+		else if (paymentStatus == "Pending"){
+	    	cout << "\n\tPayment Status: \033[33m" << paymentStatus << "\033[0m" <<endl;
+		}
+		else if (paymentStatus == "Unpaid"){
+	    	cout << "\n\tPayment Status: \033[31m" << paymentStatus << "\033[0m" <<endl;
+		}
 	}
-	else if (paymentStatus == "Unpaid"){
-    cout << "\n\tPayment Status: \033[31m" << paymentStatus << "\033[0m" <<endl;
-	}
-}
-
+	// Function that overrides displayUserInfo to display student details in table form
     void displayUserInfo() const override {
         User::displayUserInfo();
         cout << left
@@ -1010,6 +1015,7 @@ public:
 			 << "\n\tYear: " << yearLevel << endl;	
 	}
 	
+	// Function to validate Student ID
 	void validateID() override {
         while (getUserID().empty() || getUserID()[0] != 'S') {
             cout << "\t\033[31mError: Student ID must start with 'S'. Invalid ID: \033[0m" << getUserID() << endl;
@@ -1021,6 +1027,7 @@ public:
     }
 };
 
+// Class to store and manage all students
 class AllStudents {
 private:
     vector<Student> allStudents;
@@ -1039,7 +1046,7 @@ public:
     void addStudent(const Student& student) {
         allStudents.push_back(student);
     }
-
+	
     Student* findStudent(const string& studentID) {
         for (auto& student : allStudents) {
             if (student.getUserID() == studentID) {
@@ -1049,27 +1056,27 @@ public:
         return nullptr;
     }
     
+    // Function to display all students
     void displayAllStudents() {
-    if (allStudents.empty()) {
-        cout << "\tNo students available." << endl;
-        return;
-    }
-
-    // Header
-    cout << "\t\033[32m" << left 
-         << setw(15) << "Student ID" 
-         << setw(25) << "Name" 
-         << setw(20) << "Department" 
-         << setw(15) << "Program" 
-         << setw(10) << "Year\033[0m" 
-         << endl;
-    cout << "\t-------------------------------------------------------------------------------------\n";
-
-    // Display student details
-    for (const Student& student : allStudents) {
-        student.displayUserInfo();
-    }
-}
+	    if (allStudents.empty()) {
+	        cout << "\tNo students available." << endl;
+	        return;
+	    }
+	    // Header
+	    cout << "\t\033[32m" << left 
+	         << setw(15) << "Student ID" 
+	         << setw(25) << "Name" 
+	         << setw(20) << "Department" 
+	         << setw(15) << "Program" 
+	         << setw(10) << "Year\033[0m" 
+	         << endl;
+	    cout << "\t-------------------------------------------------------------------------------------\n";
+	    // Display student details
+	    for (const Student& student : allStudents) {
+	        student.displayUserInfo();
+	    }
+	}
+	
 	// Function to remove a student from the system
 	void removeStudent(const string& searchID) {
     	for (int i = 0; i < allStudents.size(); ++i) {
@@ -1082,6 +1089,7 @@ public:
     	cout << "\t\033[31mStudent not found.\033[0m\n";
 	}
 	
+	// Function to edit student details
 	void editStudent(const string& studentID) {
         Student* student = findStudent(studentID);
         if (student == nullptr) {
@@ -1206,11 +1214,19 @@ public:
 
     // Add a course to the professor's assigned courses
     void assignCourse(Course* course) {
-        // Ensure the course isn't already assigned
-            courses.push_back(course);
-            course->setProfessor(*this); // Associate this professor with the course
-        
-    }
+	    // Ensure the course isn't already assigned
+	    if (course->getProfessor() != nullptr) {
+	        cout << "\t\033[31mError: Course " << course->getCourseCode() << " is already assigned to Professor "
+	                  << course->getProfessor()->getLastName() << ".\033[0m" << endl;
+	        return;
+	    }
+	    // Assign the course to this professor
+	    courses.push_back(course);
+	    course->setProfessor(*this); 
+	    cout << "\t\033[32mProfessor " << getFirstName() << " " << getLastName()
+         << " assigned to course " << course->getCourseCode() << " successfully.\033[0m\n";
+	}
+
 
     // Get all assigned courses
     vector<Course*> getAssignedCourses() const {
@@ -1274,6 +1290,7 @@ public:
     }
 };
 
+// Class to store and manage all professors
 class AllProfessors {
 private:
     vector<Professor> professors;
@@ -1623,8 +1640,6 @@ public:
     // Assign the course to the professor
     professor->assignCourse(course);
     course->setProfessor(*professor); // Link course to professor
-    cout << "\t\033[32mProfessor " << professor->getFirstName() << " " << professor->getLastName()
-         << " assigned to course " << course->getCourseCode() << " successfully.\033[0m\n";
 }
 
 	void displayAllProfessors(){
@@ -1637,7 +1652,7 @@ public:
 
 };
 
-//done. dont think im done w the colors
+// Function to display and operate admin functionalities
 void adminMenu(Admin& admin, AllCourses& courses) {
     int choice;
     do {
@@ -1762,7 +1777,19 @@ void adminMenu(Admin& admin, AllCourses& courses) {
 								 << "\t--------------------------------------------------------\n"
                                  << "\n\t   1. View by Year\n"
                                  << "\t   2. View All Courses\n";
-                            int strategyChoice = getValidIntegerInput("\n\tEnter your choice: ");
+                            
+                            int strategyChoice; 
+							
+							do{
+							
+							strategyChoice  = getValidIntegerInput("\n\tEnter your choice: ");
+                            
+							if(strategyChoice < 1 || strategyChoice > 2) { 
+								cout << "\n\t\033[31mInvalid choice.\033[0m\n";
+							}
+							
+                            } while(strategyChoice < 1 || strategyChoice > 2 );
+                            
                             if (strategyChoice == 1) {
                                 courses.setCurriculumStrategy(new CurriculumByYear());
                             } else if (strategyChoice == 2) {
@@ -1801,6 +1828,7 @@ void adminMenu(Admin& admin, AllCourses& courses) {
     } while (choice != 4);
 }
 
+// Function to display and operate student functionalities
 void studentMenu(Student& student, AllCourses& allCourses) {
     int choice;
 
@@ -1900,7 +1928,7 @@ void studentMenu(Student& student, AllCourses& allCourses) {
     } while (choice != 6);  // Exit the student menu when choice is 6
 }
 
-//done. dont think im done w the colors
+// Function to display and operate professor functionalities
 void profMenu(Professor& professor, AllCourses& allCourses) {
     int choice;
 
@@ -1977,10 +2005,9 @@ int main() {
                 cout << "\n\t\tEnter Password: ";
                 getline(cin, password);
 
-                // Simple admin login check
                 if (username == admin.getUsername() && password == admin.getPassword()) {
-                	cout << endl << "\t\tPress any key to continue . . . ";  // Adding tab for indentation
-					cin.ignore();  // Wait for the user to press a key
+                	cout << endl << "\t\tPress any key to continue . . . ";  
+					cin.ignore(); 
 					
             		system("CLS");
                     adminMenu(admin, allCourses);
@@ -1996,8 +2023,8 @@ int main() {
             		cout << "\t\t\t  S T U D E N T   L O G I N";
             		cout << "\n\t\t----------------------------------------------" << endl;
             		cout << "\n\t\t\tNo students in the system yet.\n";
-            		cout << endl << "\t\tPress any key to continue . . . ";  // Adding tab for indentation
-					cin.ignore();  // Wait for the user to press a key
+            		cout << endl << "\t\tPress any key to continue . . . "; 
+					cin.ignore();  
 					system("CLS");
             		break;
 				}
@@ -2006,14 +2033,15 @@ int main() {
             	cout << "\t\t     S T U D E N T   L O G I N";
             	cout << "\n\t------------------------------------------------------" << endl;
                 string studentID = getValidStringInput("\n\t\tEnter Student ID: ");
+                studentID = convertToUpper(studentID);
                 studentPassword = getValidStringInput("\n\t\tEnter Password: ");
                 Student* student = allStudents.findStudent(studentID);
                 if (student && studentPassword == student->getPassword()) {
                     studentMenu(*student, allCourses);
                 } else {
                     cout << "\n\t\t\033[31mInvalid Student ID or Password.\033[0m" << endl;
-                    cout << endl << "\t\tPress any key to continue . . . ";  // Adding tab for indentation
-					cin.ignore();  // Wait for the user to press a key
+                    cout << endl << "\t\tPress any key to continue . . . "; 
+					cin.ignore();  
 					system("CLS");
                 }
                 break;
@@ -2032,6 +2060,7 @@ int main() {
             	cout << "\t\tP R O F E S S O R   L O G I N";
             	cout << "\n\t------------------------------------------------------" << endl;
                 string profID = getValidStringInput("\n\t\tEnter Professor ID: ");
+                profID = convertToUpper(profID);
     			string profPassword = getValidStringInput("\n\t\tEnter Password: ");
     			Professor* professor = allProfessors.findProfessor(profID);
 
@@ -2055,12 +2084,12 @@ int main() {
         }
 
         if (userType != 4 && userType != 2) {
-            cout << endl << "\t\tPress any key to continue . . . ";  // Adding tab for indentation
-			cin.ignore();  // Wait for the user to press a key
+            cout << endl << "\t\tPress any key to continue . . . ";  
+			cin.ignore(); 
 			system("CLS");
 
         }
 
-    } while (userType != 4);  // Program will keep running until user chooses to exit
+    } while (userType != 4); 
     return 0;
 }
