@@ -1359,6 +1359,19 @@ public:
     }
    		return nullptr; // Return null if not found
 	}
+	
+	// Function to remove a course from the system
+    void removeProf(const string& searchID) {
+        for (int i = 0; i < professors.size(); ++i) {
+            if (convertToUpper(professors[i].getUserID()) == convertToUpper(searchID)) { 
+                professors.erase(professors.begin() + i);  
+                cout << "\t\033[32mProfessor removed successfully.\033[0m\n";
+                return;
+            }
+        }
+        cout << "\t\033[31mProfessor not found.\033[0m\n"; 
+    }
+	
 };
 AllProfessors* AllProfessors::instance = nullptr;
 
@@ -1526,6 +1539,7 @@ public:
 	    if (courseToEdit && courseToEdit->getCourseDept() == dept && courseToEdit->getCourseProg() == prog) {
 	        // Proceed to update the course
 	        allCourses.updateCourse(courseID);
+	        cout << "\t\033[32mCourse edited successfully!\033[0m" << endl;
 	    } else {
 	        cout << "\t\033[31mCourse not found in the selected department and program!\033[0m" << endl;
 	    }
@@ -1642,6 +1656,30 @@ public:
     course->setProfessor(*professor); // Link course to professor
 }
 
+	// Remove a student
+    void removeProfessor() {
+        string profID;
+        if (allProfessors.empty()) {
+        	system("CLS");
+        	cout << "\n\t-------------------------------------------------------------------------------------\n"
+			 	 << "\t                                    REMOVE PROFESSOR"
+			 	 << "\n\t-------------------------------------------------------------------------------------\n";
+        	cout << "\tNo professor available to remove." << endl;
+        	system("PAUSE");
+        	return;
+    	}
+    	else{
+        	system("CLS");
+        	cout << "\n\t-------------------------------------------------------------------------------------\n"
+			 	 << "\t                                      REMOVE STUDENT"
+			 	 << "\n\t-------------------------------------------------------------------------------------\n";
+        	allProfessors.displayAllProfessors();
+        	string profID = getValidStringInput("\n\tEnter Student ID to remove: ");
+        	profID = convertToUpper(profID);
+        	allProfessors.removeProf(profID);
+    	}
+    }
+
 	void displayAllProfessors(){
 		system("CLS");
 		cout << "\n\t---------------------------------------------------------------------------------------\n"
@@ -1718,7 +1756,8 @@ void adminMenu(Admin& admin, AllCourses& courses) {
                     	 << "\n\t1. Display All Professors\n"
                          << "\t2. Add Professor\n"
                          << "\t3. Assign Professor to a Course\n"
-                         << "\t4. Back to Admin Menu\n";
+                         << "\t4. Remove Professor\n"
+                         << "\t5. Back to Admin Menu\n";
                     professorChoice = getValidIntegerInput("\n\tEnter your choice: ");
 
                     switch (professorChoice) {
@@ -1731,7 +1770,10 @@ void adminMenu(Admin& admin, AllCourses& courses) {
                         case 3:
                             admin.assignProfessorToCourse();
                             break;
-                        case 4:
+                        case 4: 
+                        	admin.removeProfessor();
+                        	break;
+                        case 5:
                         	system("CLS");
                             cout << "\n\tReturning to Admin Menu...\n";
                             break;
@@ -1741,7 +1783,7 @@ void adminMenu(Admin& admin, AllCourses& courses) {
                     }
                 cout << endl << "\tPress any key to continue . . . ";  // Adding tab for indentation
 				cin.ignore();  // Wait for the user to press a key
-                } while (professorChoice != 4);
+                } while (professorChoice != 5);
                 break;
             }
             case 3: { // Course Management
