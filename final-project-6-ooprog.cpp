@@ -1444,7 +1444,6 @@ public:
 			 	 << "\t                                      REMOVE STUDENT"
 			 	 << "\n\t-------------------------------------------------------------------------------------\n";
         	cout << "\tNo students available to remove." << endl;
-        	system("PAUSE");
         	return;
     	}
     	else{
@@ -1665,7 +1664,6 @@ public:
 			 	 << "\t                                    REMOVE PROFESSOR"
 			 	 << "\n\t-------------------------------------------------------------------------------------\n";
         	cout << "\tNo professor available to remove." << endl;
-        	system("PAUSE");
         	return;
     	}
     	else{
