@@ -9,22 +9,25 @@ using namespace std;
 
 // Function to handle user input for an integer 
 int getValidIntegerInput(const string& prompt) {
-    int input;
+    string input;
+    int value;
+    
     while (true) {
+        cout << prompt;
+        getline(cin, input); 
+
         try {
-            cout << prompt;
-            cin >> input;
-            // Check if the input is an integer
-            if (cin.fail()) {
+            // Check if the input is a valid integer
+            size_t pos = 0;
+            value = stoi(input, &pos);
+            
+            if (pos != input.size()) {
                 throw invalid_argument("\t\033[31mInvalid input. Please enter a valid integer.\033[0m");
             }
-            cin.ignore();
-            return input; 
-        }
-        catch (const invalid_argument& e) {
+            
+            return value;
+        } catch (const invalid_argument& e) {
             cout << e.what() << endl;
-            cin.clear(); // Clear the error flag
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
         }
     }
 }
@@ -1021,7 +1024,7 @@ public:
     
     void displayAllStudents() {
     if (allStudents.empty()) {
-        cout << "No students available." << endl;
+        cout << "\tNo students available." << endl;
         return;
     }
 
